@@ -9,15 +9,15 @@ public/index.html: header.html hackaday-quote-from-10-years-ago.html footer.html
 
 # Extract a quote from a locally saved Hackaday entry.
 #
-# Example: make hackaday-quote-from-30-days-ago.html
-hackaday-quote-from-%.html: hackaday-entry-from-%.html
+# Example: make hackaday-quote-from-3-years-ago.html
+hackaday-quote-from-%-years-ago.html: hackaday-entry-from-%-years-ago.html
 	./scripts/extract-quote $< |\
 	sed 's/^/    /' > $@
 
-# Save a local HTML copy of the last Hackaday entry from a specific date.
+# Save a local HTML copy of the last Hackaday entry from years before.
 #
-# Example: make hackaday-entry-from-30-days-ago.html
-hackaday-entry-from-%.html:
+# Example: make hackaday-entry-from-3-years-ago.html
+hackaday-entry-from-%-years-ago.html:
 	./scripts/fetch-hackaday-entries "$*" | head -n 1 |\
 	xargs curl --silent --show-error > $@
 
