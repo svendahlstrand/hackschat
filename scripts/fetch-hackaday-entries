@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Grab up to seven entries from Hackaday for a date in the past. Returns URLs,
+# separated by newline.
+#
+# Usage: fetch-hackaday-entries <val>
+#
+#   <val> follows the same format as date(1) -v
+#
+# EXAMPLE
+#
+#   The command:
+#
+#     fetch-hackaday-entries -10y
+#
+#   Will display:
+#
+#     https://hackaday.com/2009/10/06/exploding-processors-for-real/
+#     https://hackaday.com/2009/10/06/halloween-prop-bigmouth-billy-bass/
+#     https://hackaday.com/2009/10/06/five-concept-mice-add-multi-touch-control/
+#     [...]
+#
+#   In other words:
+#
+#     Get entry URLs from this day 10 years ago.
+
+set -e
+set -o pipefail
+
+date=$(date -v"$1" +"%Y/%m/%d")
+
+curl --silent --show-error "https://hackaday.com/$date/" |
+grep 'bookmark' |
+cut -d '"' -f 4

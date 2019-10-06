@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Extract a quote from a Hackaday entry HTML file.
+#
+# Usage: extract-quote <file>
+#
+#   <file> HTML file containing a Hackaday entry
+#
+# EXAMPLE
+#
+#   The command:
+#
+#     extract-quote exploding-processors-for-real.html
+#
+#   Will display:
+#
+#     <blockquote>
+#       ok, this is just stupid.  What is this for?  A bunch of juvenile
+#       delinquents?
+#       <footer>dumdum</footer>
+#     </blockquote>
+#     <a href="https://hackaday.com/2009/10/06/exploding-processors-for-real/">
+#     Exploding Processors For Real</a> by Caleb Kraft
+
+set -e
+set -o pipefail
+
+html_file="$1"
+url=$(grep 'canonical' $html_file | cut -d '"' -f 4)
+title=$(grep 'og:title' $html_file | cut -d '"' -f 4)
+author=$(grep 'Posts by' $html_file | cut -d '>' -f 3 | cut -d '<' -f 1)
+first_comment=$(grep -A 1 "comment-content" $html_file | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
+first_commentor=$(grep -Eo "Reply to [^']+" $html_file | cut -d ' ' -f 3- | head -n 1)
+
+echo "<blockquote>"
+echo "  $first_comment"
+echo "  <footer>$first_commentor</footer>"
+echo "</blockquote>"
+echo "<a href=\""$url"\">$title</a> by $author"
