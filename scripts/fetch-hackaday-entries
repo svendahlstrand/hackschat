@@ -5,13 +5,13 @@
 #
 # Usage: fetch-hackaday-entries <val>
 #
-#   <val> follows the same format as date(1) -v
+#   <val> follows the same format as date(1)
 #
 # EXAMPLE
 #
 #   The command:
 #
-#     fetch-hackaday-entries -10y
+#     fetch-hackaday-entries "10 years ago"
 #
 #   Will display:
 #
@@ -27,7 +27,7 @@
 set -e
 set -o pipefail
 
-date=$(date -v"$1" +"%Y/%m/%d")
+date=$(date +%Y/%m/%d -d "$1")
 
 curl --silent --show-error "https://hackaday.com/$date/" |
 grep 'bookmark' |
