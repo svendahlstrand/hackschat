@@ -4,6 +4,7 @@ all: build/index.html
 
 # Put everything together: results in a webpage with 10 year old quote.
 build/index.html: header.html hackaday-quote-from-10y-ago.html footer.html
+	mkdir -p build
 	cat $^ > $@
 
 # Extract a quote from a locally saved Hackaday entry.
