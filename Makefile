@@ -1,10 +1,10 @@
 .PHONY: all sloc clean
 
-all: build/index.html
+all: public/index.html
 
 # Put everything together: results in a webpage with 10 year old quote.
-build/index.html: header.html hackaday-quote-from-10-years-ago.html footer.html
-	mkdir -p build
+public/index.html: header.html hackaday-quote-from-10-years-ago.html footer.html
+	mkdir -p public
 	cat $^ > $@
 
 # Extract a quote from a locally saved Hackaday entry.
@@ -26,4 +26,4 @@ sloc: Makefile header.html footer.html ./scripts/fetch-hackaday-entries ./script
 	cat $^ | grep --invert-match '^\s*#' | grep --invert-match '^\s*$$' | wc -l
 
 clean:
-	rm -f build/*.html hackaday-*.html
+	rm -f public/*.html hackaday-*.html
