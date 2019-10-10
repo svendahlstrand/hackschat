@@ -26,14 +26,14 @@ set -e
 set -o pipefail
 
 html_file="$1"
-url=$(grep 'canonical' $html_file | cut -d '"' -f 4)
-title=$(grep 'og:title' $html_file | cut -d '"' -f 4)
-author=$(grep 'Posts by' $html_file | cut -d '>' -f 3 | cut -d '<' -f 1)
-first_comment=$(grep -A 1 "comment-content" $html_file | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
-first_commentor=$(grep -Eo "Reply to [^']+" $html_file | cut -d ' ' -f 3- | head -n 1)
+url=$(grep 'canonical' "${html_file}" | cut -d '"' -f 4)
+title=$(grep 'og:title' "${html_file}" | cut -d '"' -f 4)
+author=$(grep 'Posts by' "${html_file}" | cut -d '>' -f 3 | cut -d '<' -f 1)
+first_comment=$(grep -A 1 "comment-content" "${html_file}" | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
+first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
 
 echo "<blockquote>"
-echo "  $first_comment"
-echo "  <footer>$first_commentor</footer>"
+echo "  ${first_comment}"
+echo "  <footer>${first_commentor}</footer>"
 echo "</blockquote>"
-echo "<a href=\""$url"\">$title</a> by $author"
+echo "<a href=\"${url}\">${title}</a> by ${author}"
