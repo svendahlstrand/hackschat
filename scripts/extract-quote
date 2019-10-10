@@ -33,8 +33,8 @@ author=$(grep 'Posts by' "${html_file}" | cut -d '>' -f 3 | cut -d '<' -f 1)
 first_comment=$(grep -A 1 "comment-content" "${html_file}" | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
 first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
 
-echo "<h2>${year}</h2>"
 echo "<blockquote>"
-echo "  ${first_comment}"
-echo "  <footer>${first_commentor} commented on<br /><cite><a href=\"${url}#comments\">${title}</a></cite> by&nbsp;${author}.</footer>"
+echo "  ${first_comment}<br />"
+echo "  –&nbsp;<cite>${first_commentor}</cite>"
+echo "  <footer><a href=\"${url}#comments\">${title}</a> by ${author}, ${year}.</footer>"
 echo "</blockquote>"
