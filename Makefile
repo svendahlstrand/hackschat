@@ -1,9 +1,12 @@
+QUOTE_YEARS=1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+QUOTE_FILES=$(addprefix quote-from-,$(addsuffix -years-ago.html,$(QUOTE_YEARS)))
+
 .PHONY: all lint sloc clean
 
 all: public/index.html
 
 # Put everything together: results in a webpage with 10 year old quote.
-public/index.html: header.html quote-from-10-years-ago.html footer.html
+public/index.html: header.html $(QUOTE_FILES) footer.html
 	cat $^ > $@
 
 # Extract a quote from a locally saved Hackaday entry.
