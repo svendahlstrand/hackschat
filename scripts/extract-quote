@@ -34,6 +34,5 @@ first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | 
 
 echo "<blockquote>"
 echo "  ${first_comment}"
-echo "  <footer>${first_commentor}</footer>"
+echo "  <footer>${first_commentor} commented on<br /><cite><a href=\"${url}#comments\">${title}</a></cite> by&nbsp;${author}.</footer>"
 echo "</blockquote>"
-echo "<a href=\"${url}\">${title}</a> by ${author}"
