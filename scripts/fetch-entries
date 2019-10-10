@@ -27,6 +27,6 @@
 set -e
 set -o pipefail
 
-curl --silent --show-error "https://hackaday.com/$1/" |
+curl --location --silent --show-error "https://hackaday.com/$1/" |
 grep 'bookmark' |
 cut -d '"' -f 4
