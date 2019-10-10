@@ -18,11 +18,11 @@ hackaday-quote-from-%-years-ago.html: hackaday-entry-from-%-years-ago.html
 #
 # Example: make hackaday-entry-from-3-years-ago.html
 hackaday-entry-from-%-years-ago.html:
-	./scripts/fetch-hackaday-entries "$*" | head -n 1 |\
+	./scripts/years-ago "$*" | xargs ./scripts/fetch-entries | head -n 1 |\
 	xargs curl --silent --show-error > $@
 
 # Count total lines of code excluding comments and empty lines.
-sloc: Makefile header.html footer.html ./scripts/fetch-hackaday-entries ./scripts/extract-quote
+sloc: Makefile header.html footer.html ./scripts/extract-quote ./scripts/fetch-entries ./scripts/years-ago
 	cat $^ | grep --invert-match '^\s*#' | grep --invert-match '^\s*$$' | wc -l
 
 clean:

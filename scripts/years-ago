@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Get the date for a number of years back in time.
+#
+# Usage: years-ago <years>
+#
+#   <years> The number of years you want to travel back.
+#
+# EXAMPLE
+#
+#   The command:
+#
+#     years-ago 3
+#
+#   Will display:
+#
+#     2016/10/10
+
+set -e
+set -o pipefail
+
+DATE_FORMAT=(+%Y/%m/%d)
+
+# BSD's date expects different arguments than GNU's ditto. Try the BSD variant
+# first, and if that fails, assume we are using the GNU flavor.
+echo $(date -v -$1y $DATE_FORMAT 2> /dev/null ||\
+       date --date="$1 years ago" $DATE_FORMAT)

@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 #
-# Grab up to seven entries from Hackaday for a year in the past. Returns URLs,
+# Grab up to seven entries from Hackaday for a specific date. Returns URLs,
 # separated by newline.
 #
-# Usage: fetch-hackaday-entries <yearsago>
+# Usage: fetch-entries <date>
 #
-#   <yearsago> a number of years in the past
+#   <date> on the format YYYY/MM/DD
 #
 # EXAMPLE
 #
 #   The command:
 #
-#     fetch-hackaday-entries 10
+#     fetch-entries 2009/10/06
 #
 #   Will display:
 #
@@ -22,13 +22,11 @@
 #
 #   In other words:
 #
-#     Get entry URLs from this day 10 years ago.
+#     Get entry URLs published on October 6 2009.
 
 set -e
 set -o pipefail
 
-date=$(date -v "-$1y" +"%Y/%m/%d" 2> /dev/null) || date=$(date +%Y/%m/%d --date="$1 years ago")
-
-curl --silent --show-error "https://hackaday.com/$date/" |
+curl --silent --show-error "https://hackaday.com/$1/" |
 grep 'bookmark' |
 cut -d '"' -f 4
