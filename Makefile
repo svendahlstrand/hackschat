@@ -5,7 +5,7 @@ QUOTE_FILES=$(addprefix quote-from-,$(addsuffix -years-ago.html,$(QUOTE_YEARS)))
 
 all: public/index.html
 
-# Put everything together: results in a webpage with 10 year old quote.
+# Put everything together: results in a webpage with quotes.
 public/index.html: header.html $(QUOTE_FILES) footer.html
 	cat $^ > $@
 
@@ -28,7 +28,7 @@ lint:
 	shellcheck --enable=all scripts/*
 
 # Count total lines of code excluding comments and empty lines.
-sloc: Makefile header.html footer.html ./scripts/extract-quote ./scripts/fetch-entries ./scripts/years-ago
+sloc: Makefile header.html footer.html ./scripts/*
 	cat $^ | grep --invert-match '^\s*#' | grep --invert-match '^\s*$$' | wc -l
 
 clean:
