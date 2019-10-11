@@ -24,7 +24,7 @@
 #
 #     Get entry URLs published on October 6 2009.
 
-set -e
+set -o errexit
 set -o pipefail
 
 curl --location --silent --show-error "https://hackaday.com/$1/" |

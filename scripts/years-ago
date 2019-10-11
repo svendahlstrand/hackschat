@@ -18,9 +18,8 @@
 #
 #   when called on October 10 2019.
 
-set -e
+set -o errexit
 set -o pipefail
-set -x
 
 DATE_FORMAT="+%Y/%m/%d"
 

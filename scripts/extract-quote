@@ -22,7 +22,7 @@
 #     <a href="https://hackaday.com/2009/10/06/exploding-processors-for-real/">
 #     Exploding Processors For Real</a> by Caleb Kraft
 
-set -e
+set -o errexit
 set -o pipefail
 
 html_file="$1"
