@@ -34,9 +34,9 @@ first_comment=$(grep -A 1 "comment-content" "${html_file}" | sed -n 2p | cut -d 
 first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
 
 cat << EOF
-<blockquote>
-  <p>${first_comment}</p>
-  <cite>${first_commentor}</cite>
-  <footer><a href="${url}">${title}</a> by ${author}, ${year}.</footer>
-</blockquote>
+    <blockquote>
+      <p>${first_comment}</p>
+      <cite>${first_commentor}</cite>
+      <footer><a href="${url}">${title}</a> by ${author}, ${year}.</footer>
+    </blockquote>
 EOF
