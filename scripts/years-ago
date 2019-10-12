@@ -24,6 +24,6 @@ set -o pipefail
 DATE_FORMAT="+%Y/%m/%d"
 
 # BSD's date expects different arguments than GNU's ditto. Try the BSD variant
-# first, and if that fails, assume we are using the GNU flavor.
+# first, and if that fails, assume we are in GNU land.
 date -v -"$1y" "${DATE_FORMAT}" 2> /dev/null ||
 date --date="$1 years ago" "${DATE_FORMAT}"

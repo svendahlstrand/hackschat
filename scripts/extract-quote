@@ -15,17 +15,32 @@
 #   Will display:
 #
 #     <blockquote>
-#       ok, this is just stupid.  What is this for?  A bunch of juvenile
-#       delinquents?
-#       <footer>dumdum</footer>
+#       <p>
+#         ok, this is just stupid.  What is this for?  A bunch of juvenile
+#         delinquents?
+#       </p>
+#       <cite>dumdum</cite>
+#       <footer>
+#         <a href=""https://hackaday.com/2009/10/06/exploding-processors-for-real/">
+#           Exploding Processors For Real
+#         </a> by Caleb Kraft, 2009.
+#       </footer>
 #     </blockquote>
-#     <a href="https://hackaday.com/2009/10/06/exploding-processors-for-real/">
-#     Exploding Processors For Real</a> by Caleb Kraft
 
 set -o errexit
 set -o pipefail
 
 html_file="$1"
+
+# Extract relevant details from HTML file. Here's what the relevant HTML source
+# looks like for reference:
+#
+# <link rel="canonical" href="{url}">
+# <title>{title}</title>
+# <meta property="article:published_time" content="{year}-10-20T23:01:59+00:00">
+# <a [...] title="Posts by {author}" [...]>{author}</a>
+# <div class="comment-content">\n<p>{first_comment}</p>
+# <div class="reply"><a [...] aria-label='Reply to {first_commentor}'>Reply</a>
 url=$(grep 'canonical' "${html_file}" | cut -d '"' -f 4)
 title=$(grep 'og:title' "${html_file}" | cut -d '"' -f 4)
 year=$(grep 'article:published_time' "${html_file}" | cut -d '"' -f 4 | cut -d '-' -f 1)
@@ -33,6 +48,7 @@ author=$(grep 'Posts by' "${html_file}" | cut -d '>' -f 3 | cut -d '<' -f 1)
 first_comment=$(grep -A 1 "comment-content" "${html_file}" | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
 first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
 
+# Finally, produce a `blockquote` HTML snippet.
 cat << EOF
     <blockquote>
       <p>${first_comment}</p>
