@@ -7,6 +7,7 @@ all: public/index.html
 
 # Put everything together, resulting in a webpage with stale Hackaday quotes.
 public/index.html: header.html $(QUOTE_FILES) footer.html
+	mkdir -p public
 	cat $^ > $@
 
 # Extract a quote from a locally saved Hackaday entry.
