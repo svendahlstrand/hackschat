@@ -46,7 +46,7 @@ title=$(grep 'og:title' "${html_file}" | cut -d '"' -f 4)
 year=$(grep 'article:published_time' "${html_file}" | cut -d '"' -f 4 | cut -d '-' -f 1)
 author=$(grep 'Posts by' "${html_file}" | cut -d '>' -f 3 | cut -d '<' -f 1)
 first_comment=$(grep -A 1 "comment-content" "${html_file}" | sed -n 2p | cut -d '>' -f 2 | cut -d '<' -f 1)
-first_commentor=$(grep -Eo "Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
+first_commentor=$(grep -Eo "aria-label='Reply to [^']+" "${html_file}" | cut -d ' ' -f 3- | head -n 1)
 
 # Finally, produce a `blockquote` HTML snippet.
 cat << EOF
